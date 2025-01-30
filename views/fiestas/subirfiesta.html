@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir fiesta</title>
+</head>
+<body>
+    <form method="post">
+        
+        <label for="tipoFiesta">Tipo de fiesta</label>
+        <select name="tipo" id="tipoFiesta">
+            <option value="">Selecciona el tipo de fiesta</option>
+            <option value="discoteca">Discoteca</option>
+            <option value="fiestaPrivada">Fiesta privada</option>
+        </select>
+        <span id="tipoFiestaErr"></span>
+        <br>
+        
+        <h3>Localizacion y fecha </h3>
+
+        <div id="nombre"></div>
+
+        <label for="ciudad">Ciudad: </label>
+        <select name="ciudad" id="ciudad">
+            <option value="">Selecciona una ciudad</option>
+            <option value="Madrid">Madrid</option>
+            <option value="Barcelona">Barcelona</option>
+        </select>
+        <span id="ciudadErr"></span>
+        <br>
+
+        <label>Localizacion: </label>
+        <input type="text" name="lugar" id="localizacion">
+        <span id="localizacionErr"></span>
+        <br>
+
+        <label>Fecha: </label>
+        <input type="date" name="fecha" id="fecha">
+        <span id="fechaErr"></span>
+        <br>
+
+        <label>Hora: </label>
+        <input type="time" name="hora" id="hora">
+        <span id="horaErr"></span>
+        <br>
+
+        <h3>Información general</h3>
+
+        <label>Requisito de vestimenta: </label>
+        <select name="vestimenta" id="vestimenta">
+            <option value="">Selecciona el tipo de vestimenta</option>
+            <option value="ninguno">Ninguno</option>
+            <option value="etiqueta">Etiqueta</option>
+            <option value="elegante">Elegante(Camisa, chinos, mocasines)</option>
+            <option value="casual">Casual (Vaqueros, camisas informales, deportivas)</option>
+            <option value="ibicenca">Ibicenca (Blanco entero)</option>
+            <option value="disfraces">De disfraces</option>
+            <option value="tematica">Fiesta tematica</option>
+        </select>
+        <span id="vestimentaErr"></span>
+        <br>
+
+        <label>Tipo de musica</label>
+        <input type="text" name="musica" id="tipoMusica">
+        <span id="musicaErr"></span>
+        <br>    
+
+        <h3>Precios</h3>
+
+        <div id="tuAlcohol"></div>
+
+        <div id="precioDiscoteca"></div>
+
+        <label>Precio combinado: </label>
+        <input type="number" id="combinado">
+        <span id="combinadoErr"></span>
+        <br>
+
+        <label>Precio cerveza: </label>
+        <input type="number" id="cerveza">
+        <span id="cervezaErr"></span>
+        <br>
+
+        <label>Precio refresco: </label>
+        <input type="number" id="refresco">
+        <span id="refrescoErr"></span>
+        <br>
+
+        <input type="submit" id="botonSubmit">
+    </form>
+
+    <script src="../../scripts/scriptCrearFiesta.js"></script>
+</body>
+</html>

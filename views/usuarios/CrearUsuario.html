@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <form method="post" action="http://127.0.0.1:3000/usuario/crear">
+        <label for="nombreUsuario">Nombre de usuario:</label>
+        <input type="text" name="nombreUsuario" id="nombreUsuario">
+        <span id="nombreError"></span>
+        <br>
+
+        <label for="correo">Correo:</label>
+        <input type="email" name="correo" id="correo">
+        <span id="correoError"></span>
+        <br>
+
+        <label for="pass">Contraseña:</label>
+        <input type="password" name="pass" id="pass">
+        <i class="fas fa-eye" id="show"></i>
+        <span id="mostrarPass">Mostrar contraseña</span>
+        <span id="passError"></span>
+        <br>
+
+        <label for="confPass">Confirmar contraseña:</label>
+        <input type="password" name="confPass" id="confPass">
+        <span id="confPassError"></span>
+        <br>
+
+        <label for="edad">Edad:</label>
+        <input type="number" name="edad" id="edad">
+        <span id="edadError"></span>
+        <br>
+
+        <label for="ciudad">Ciudad:</label>
+        <select name="ciudad" id="ciudad">
+            <option value="0">Selecciona una ciudad</option>
+            <option value="madrid">Madrid</option>
+            <option value="barcelona">Barcelona</option>
+        </select>
+        <span id="ciudadError"></span>
+        <br>
+
+        <input type="submit">
+        <input type="reset">
+    </form>
+
+    <script src="../../scripts/scriptCrearUsuario.js"></script>
+</body>
+</html>

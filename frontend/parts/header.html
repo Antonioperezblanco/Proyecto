@@ -1,24 +1,19 @@
-<nav>
-    <div class="contenedorIzq">
-        <p id="info" class="info"></p>
-        <button class="btn btn-primary"> INICIO </button>
-    </div>
-</nav>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const nombreUsuario = localStorage.getItem('nombreUsuario') || "Usuario no encontrado";
-    const correo = localStorage.getItem('correo')
-    const edad = localStorage.getItem('edad')
-    const ciudad = localStorage.getItem('ciudad')
-    const pass = localStorage.getItem('pass')
+<div class="contenedorIzq d-flex align-items-center">
+    <p id="info" class="info"></p>
+    <a href="./busqueda.html">
+        <button class="inicio btn m-4"> INICIO </button>
+    </a>
+</div>
 
-    const info = document.getElementById('info');
-
-    if (info) {
-        info.textContent = nombreUsuario;
-        console.log("Nombre de usuario cargado:", nombreUsuario);
-    } else {
-        console.error("Elemento con id 'info' no encontrado.");
-    }
-});
-</script>
+<div class="contenedorCentro d-flex align-items-center justify-content-center">
+    <a href="./fiestas/subirFiesta.html">
+        <button class="btn btn-success">Subir una fiesta</button>
+    </a>
+</div>
+<div class="contenedorDer d-flex align-items-center">
+    <form>
+        <input type="text" id="anadir" class="form-control-sm" placeholder="Añadir amigo...">
+        <input type="submit" value="Buscar Amigo..." class="btn-sm btn-secondary" id="buscarAmigo">
+    </form>
+    <i class="iconoNotificacion fa-regular fa-bell"></i>
+</div> 

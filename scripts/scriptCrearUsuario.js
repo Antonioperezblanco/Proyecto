@@ -1,11 +1,11 @@
 // Variables para mostrar la contraseña
-const mostrar = document.getElementById("show");  //Icono ojo
-const pass = document.getElementById("pass");   //input contraseña
-const confPass = document.getElementById("confPass");   //input confirmar contraseña
-const mostrarPass = document.getElementById("mostrarPass");  //Span texto icono
+const mostrar = document.getElementById("show");  // Icono ojo
+const pass = document.getElementById("pass");   // Input contraseña
+const confPass = document.getElementById("confPass");   // Input confirmar contraseña
+const mostrarPass = document.getElementById("mostrarPass");  // Span texto icono
 
 // Elementos del formulario
-const formulario = document.querySelector("body");
+const formulario = document.querySelector("form")
 const submitButton = document.querySelector('input[type="submit"]');
 
 // Campos del formulario
@@ -47,17 +47,26 @@ mostrar.addEventListener("click", () => {
 
 // Validación de los campos al escribir
 nombreUsuario.addEventListener("input", () => {
-    nombreError.textContent = nombreUsuario.value ? "" : "Debe introducir un nombre de usuario";
+    if (nombreUsuario.value === "") {
+        nombreError.textContent = "Debe introducir un nombre de usuario";
+        nombreUsuario.style.outline = 'red 2px solid';
+    } else {
+        nombreError.textContent = "";
+        nombreUsuario.style.outline = 'none';
+    }
     checkValidations();
 });
 
 correo.addEventListener("input", () => {
     if (!correo.value) {
         correoError.textContent = "Debe introducir un correo";
+        correo.style.outline = 'red 2px solid';
     } else if (!emailPattern.test(correo.value)) {
         correoError.textContent = "Debe introducir un correo válido";
+        correo.style.outline = 'red 2px solid';
     } else {
         correoError.textContent = "";
+        correo.style.outline = 'none';
     }
     checkValidations();
 });
@@ -65,16 +74,25 @@ correo.addEventListener("input", () => {
 pass.addEventListener("input", () => {
     if (!pass.value) {
         passError.textContent = "Debe introducir una contraseña";
+        pass.style.outline = 'red 2px solid';
     } else if (pass.value.length < 8) {
         passError.textContent = "La contraseña debe tener al menos 8 caracteres";
+        pass.style.outline = 'red 2px solid';
     } else {
         passError.textContent = "";
+        pass.style.outline = 'none';
     }
     checkValidations();
 });
 
 confPass.addEventListener("input", () => {
-    confPassError.textContent = pass.value !== confPass.value ? "Las contraseñas no son iguales" : "";
+    if (pass.value !== confPass.value) {
+        confPassError.textContent = "Las contraseñas no son iguales";
+        confPass.style.outline = 'red 2px solid';
+    } else {
+        confPassError.textContent = "";
+        confPass.style.outline = 'none';
+    }
     checkValidations();
 });
 
@@ -82,20 +100,31 @@ edad.addEventListener("input", () => {
     const valorEdad = parseInt(edad.value);
     if (!edad.value) {
         edadError.textContent = "Debe introducir una edad";
+        edad.style.outline = 'red 2px solid';
     } else if (valorEdad < 18) {
         edadError.textContent = "Debes ser mayor de edad";
+        edad.style.outline = 'red 2px solid';
     } else if (valorEdad > 120) {
         edadError.textContent = "Edad no válida";
+        edad.style.outline = 'red 2px solid';
     } else {
-        edadError.textContent = "";   //Vacío el span de error en casa de que este bien
+        edadError.textContent = "";   // Vacío el span de error en caso de que esté bien
+        edad.style.outline = 'none';  
     } 
     checkValidations();
 });
 
 ciudad.addEventListener("input", () => {
-    ciudadError.textContent = ciudad.value === "0" ? "Debes seleccionar una ciudad" : "";  //ciudad value == "0", ciudad por defecto (no válida)
+    if (ciudad.value === "0") {
+        ciudadError.textContent = "Debes seleccionar una ciudad";
+        ciudad.style.outline = 'red 2px solid';
+    } else {
+        ciudadError.textContent = "";
+        ciudad.style.outline = 'none';
+    }
     checkValidations();
 });
+
 
 // Función para comprobar si todos los campos son válidos
 function checkValidations() {
@@ -107,6 +136,62 @@ function checkValidations() {
     if (pass.value !== confPass.value) valido = false;
     if (!edad.value || parseInt(edad.value) < 18 || parseInt(edad.value) > 120) valido = false;
     if (ciudad.value === "0") valido = false;
+    
+    submitButton.disabled = !valido;  // Habilita el botón solo si los campos son válidos
 
-    submitButton.disabled = !valido;  //Si todos los campos son válidos habilita el botón de submit
+    if (valido) {
+        submitButton.className = "btn btn-success";
+    } else {
+        submitButton.className = "btn btn-danger";
+    }
 }
+
+// Enviar datos al servidor
+formulario.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const datos = {
+        nombreUsuario: nombreUsuario.value,
+        correo: correo.value,
+        pass: pass.value,
+        edad: edad.value,
+        ciudad: ciudad.value
+    };
+
+    try {
+        const respuesta = await fetch('http://localhost:3000/usuario/crear', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datos)
+        });
+
+        const resultado = await respuesta.json();
+
+        if (respuesta.ok) {
+            // Guardar en localStorage
+            localStorage.setItem('nombreUsuario', nombreUsuario.value);
+            localStorage.setItem('correo', correo.value);
+            localStorage.setItem('edad', edad.value);
+            localStorage.setItem('ciudad', ciudad.value);
+            localStorage.setItem('pass', pass.value);
+
+            // Verificar si se guardaron correctamente
+            if (
+                localStorage.getItem('nombreUsuario') === nombreUsuario.value &&
+                localStorage.getItem('correo') === correo.value &&
+                localStorage.getItem('edad') === edad.value &&
+                localStorage.getItem('ciudad') === ciudad.value &&
+                localStorage.getItem('pass') === pass.value
+            ) {
+                window.location.href = "../busqueda.html"; // Redirección tras registro exitoso
+            } else {
+                alert("Error al almacenar los datos");
+            }
+        } else {
+            alert("Error: " + resultado.mensaje);
+        }
+    } catch (error) {
+        console.error("Error de conexión:", error);
+    }
+   
+});

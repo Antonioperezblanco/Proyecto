@@ -1,0 +1,42 @@
+body {
+    background: linear-gradient(to right, #003366, #4b0082);
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    overflow-x: hidden;
+}
+form{
+    background-color:white;
+}
+
+.info{
+    text-decoration: underline;
+}
+.showPass {
+    user-select: none; /* Evita la selección de texto */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE/Edge */
+}
+
+.img-carousel {
+    height: 400px; 
+    object-fit: cover; 
+}
+
+.carousel-control-prev, .carousel-control-next {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none; 
+    border-radius: 10%; 
+    width: 150px;
+    height: 50px; 
+    opacity: 0.7; 
+    transition: opacity 0.3s ease;
+}
+
+/* Cambio de color cuando pasas el ratón sobre los botones */
+.carousel-control-prev:hover, .carousel-control-next:hover {
+    opacity: 1; /* Resaltar el botón cuando se pase el ratón */
+}
+
+

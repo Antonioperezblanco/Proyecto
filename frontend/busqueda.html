@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/busqueda.css">
+    <title>Busqueda</title>
+</head>
+<body>
+    <div class="header-container" id="header-container"></div>
+    <div class="container">
+        <h1><span class="busca">¿QUÉ BUSCAS?</span> <input type="date" name="fecha" id="fecha"></h1>
+        <br>
+        <input type="button" value="DISCOTECA">
+        <input type="button" value="FIESTA PRIVADA">
+        <input type="button" value="AMBAS">
+    </div>
+</body>
+<script>
+     fetch('./parts/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+            })
+            .catch(error => console.error('Error cargando el header:', error));
+            console.log(localStorage.getItem('nombre'));
+
+</script>
+</html>

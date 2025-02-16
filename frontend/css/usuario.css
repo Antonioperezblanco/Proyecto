@@ -6,9 +6,8 @@ body {
     overflow-x: hidden;
 }
 form{
-    background-color:white;
+    background-color: white 
 }
-
 .info{
     text-decoration: underline;
 }
@@ -38,5 +37,3 @@ form{
 .carousel-control-prev:hover, .carousel-control-next:hover {
     opacity: 1; /* Resaltar el botón cuando se pase el ratón */
 }
-
-

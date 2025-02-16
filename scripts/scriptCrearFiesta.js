@@ -1,4 +1,28 @@
-    const formFiesta = document.querySelector("form")
+//Meter el header
+
+document.addEventListener("DOMContentLoaded", function() {
+            
+    fetch('../parts/header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-container').innerHTML = data;
+
+            // Después de cargar el header, buscar el elemento #info
+            const info = document.getElementById('info');
+            if (info) {
+                const nombreUsuario = localStorage.getItem('nombreUsuario') || "Usuario no encontrado";
+                info.textContent = nombreUsuario;
+                console.log("Nombre de usuario cargado:", nombreUsuario);
+            } else {
+                console.error("Elemento con id 'info' no encontrado.");
+            }
+        })
+        .catch(error => console.error('Error cargando el header:', error));
+
+    console.log(localStorage.getItem('nombre'));
+});
+   
+   const formFiesta = document.querySelector("form")
 
 
     //Campos a rellenar
@@ -47,15 +71,18 @@
 
             const labelNombre = document.createElement("label");
             labelNombre.textContent = "Nombre de la discoteca: ";
+            labelNombre.className = "form-label";
 
             const inputNombre = document.createElement("input");
             inputNombre.type = "text";
             inputNombre.name="nombre";
             inputNombre.id="nombreDiscoteca";
+            inputNombre.className ="form-control w-50";
 
             const nombreErr = document.createElement("span");
             nombreErr.id="nombreErr";
             nombreErr.textContent = "";
+            nombreErr.className = "text-danger";
 
             nombre.appendChild(labelNombre);
             nombre.appendChild(inputNombre);
@@ -64,20 +91,26 @@
         
             const labelPrecio = document.createElement("label");
             labelPrecio.textContent = "Precio de la discoteca: ";
-
+            labelPrecio.className = "form-label"
             const inputPrecio = document.createElement("input");
             inputPrecio.type="number";
             inputPrecio.name="precioDiscoteca";
             inputPrecio.id="precioDisco";
+            inputPrecio.className = "form-control w-25"
 
             const spanPrecio = document.createElement("span");
             spanPrecio.id="precioDiscoErr";
             spanPrecio.textContent ="";
+            spanPrecio.className = "text-danger"
 
             precioDisco.appendChild(labelPrecio);
             precioDisco.appendChild(inputPrecio);
             precioDisco.appendChild(spanPrecio);
             precioDisco.appendChild(document.createElement("br"));
+
+            combinado.disabled = false;
+            refresco.disabled = false;
+            cerveza.disabled = false;
 
             nombre.addEventListener("input", ()  => {
                 nombreErr.textContent = inputNombre.value  ? "" : "Debe introducir un nombre de discoteca";
@@ -95,11 +128,14 @@
 
                 const labelAlcohol = document.createElement("label");
                 labelAlcohol.textContent = "¿Pueden llevar su alcohol?";
-
+                labelAlcohol.className = "form-label"
                 const inputAlcohol = document.createElement("input");
                 inputAlcohol.type = "checkbox";
                 inputAlcohol.name = "alcohol";
                 inputAlcohol.id = "alcohol";
+                inputAlcohol.className = "form-check-input"
+                inputAlcohol.style.textAlign = "center";
+
                 tuAlcohol.appendChild(labelAlcohol);
                 tuAlcohol.appendChild(inputAlcohol);
                 tuAlcohol.appendChild(document.createElement("br"));
@@ -126,7 +162,11 @@
 
     //Eventos para mostrar errores
     tipoFiesta.addEventListener("change", () => {
-        tipoFiestaErr.textContent = tipoFiesta.value ? "" : "Debe introducir un tipo de fiesta";
+        if (!tipoFiesta.value){
+            tipoFiestaErr.textContent = "Debes seleccionar un tipo de fiesta";
+        } else{
+            tipoFiestaErr.textContent = "";
+        }
         checkValidations();
     });
 
@@ -172,23 +212,41 @@
     combinado.addEventListener("input", () => {
         const inputAlcohol = document.getElementById("alcohol");
         if(tipoFiesta.value ==  "discoteca" || (tipoFiesta.value=="fiestaPrivada" && !inputAlcohol.checked)){
-        combinadoErr.textContent = combinado.value ? "" : "Debe introducir un precio del combinado";
-        checkValidations();
+            if(!combinado.value) {
+                combinadoErr.textContent = "Debes introducir un precio de combinado";
+            } else if (combinado.value <= 0){
+                combinadoErr.textContent = "El precio del combinado no puede ser negativo";
+            } else {
+                combinadoErr.textContent = "";
+            }
+            checkValidations();
         }
     });
 
     cerveza.addEventListener("input", () => {
         const inputAlcohol = document.getElementById("alcohol");
         if(tipoFiesta.value == "discoteca" || !inputAlcohol.checked){
-        cervezaErr.textContent = cerveza.value ? "" : "Debe introducir un precio de la cerveza";
-        checkValidations();
+            if (!cerveza.value){
+                cervezaErr.textContent = "Debes introducir un precio de cerveza";
+            } else if (cerveza.value < 0){
+                cervezaErr.textContent = "El precio de la cerveza no puede ser negativo";
+            } else {
+                cervezaErr.textContent = "";
+            }
+            checkValidations();
         }
     });
 
     refresco.addEventListener("input", () => {
         const inputAlcohol = document.getElementById("alcohol");
         if(tipoFiesta.value == "discoteca" || !inputAlcohol.checked){
-        refrescoErr.textContent = refresco.value ? "" : "Debe introducir un precio del refresco";
+            if (!refresco.value){
+                refrescoErr.textContent = "Debes introducir un precio de refresco";
+            } else if (refresco.value < 0){
+                refrescoErr.textContent = "El precio del refresco no puede ser negativo";
+            } else {
+                refrescoErr.textContent = "";
+            }
         checkValidations();
         }
     });
@@ -211,9 +269,9 @@
             if (!nombre.value) valido = false;
             if (!precioDisco.value) valido = false;
             
-            if (!combinado.value) valido = false;
-            if (!cerveza.value) valido = false;
-            if (!refresco.value) valido = false;
+            if (!combinado.value || combinado.value < 0) valido = false;
+            if (!cerveza.value || cerveza.value < 0) valido = false;
+            if (!refresco.value || refresco.value < 0) valido = false;
 
         }else if (tipoFiesta.value == "fiestaPrivada"){
             const inputAlcohol = document.getElementById("alcohol");
@@ -232,4 +290,53 @@
         }
 
         botonSubmit.disabled = !valido;
+        if (!valido) {
+            botonSubmit.className = "btn btn-danger";
+        } else {
+            botonSubmit.className = "btn btn-success";
+        }
     }
+formFiesta.addEventListener("submit", async function(event){
+        event.preventDefault();
+
+        const inputNombre = document.getElementById("nombreDiscoteca");
+        const inputPrecio = document.getElementById("precioDisco");
+        const inputAlcohol = document.getElementById("alcohol");
+        const alcoholChecked = inputAlcohol ? inputAlcohol.checked : false;
+        const nombre = inputNombre ? inputNombre.value : '';
+        const precio = inputPrecio ? inputPrecio.value : '';
+
+
+        const datos = {
+            tipo: tipoFiesta.value,
+            ciudad: ciudad.value,
+            localizacion: localizacion.value,
+            fecha: fecha.value,
+            hora: hora.value,
+            vestimenta: vestimenta.value,
+            musica: tipoMusica.value,
+            precioCombinado: combinado.value,
+            precioCerveza: cerveza.value,
+            precioRefresco: refresco.value,
+            nombre: nombre,  
+            precio: precio,     
+            tuAlcohol: alcoholChecked         
+        };
+        try {
+            const respuesta = await fetch('http://127.0.0.1:3000/fiesta/crear', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datos)
+            });
+    
+            const resultado = await respuesta.json();
+    
+            if (respuesta.ok) {
+                window.location.href = '../busqueda.html';  // Redirige a la página de búsqueda si la fiesta se crea correctamente
+            } else {
+                alert("Error:" + resultado.mensaje);
+            }
+        } catch (error) {
+            console.error("Error de conexión:", error);
+        }
+    });

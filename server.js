@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import connectDB from './backend/database/db.js';
 import usuarioRoutes from './backend/routes/usuarioRoutes.js';
+import fiestaRoutes from './backend/routes/fiestaRoutes.js';
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.static('frontend'));
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/usuario', usuarioRoutes);
+app.use('/fiesta', fiestaRoutes);
 
 const PORT = 3000;
 app.listen(PORT, () => {

@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
-const { Fiesta } = require('./Fiesta'); 
+import mongoose from 'mongoose';
+import  Fiesta from './Fiesta.js' 
 
 const fiestaPrivadaSchema = new mongoose.Schema({
-    tuAlcohol: { type: Boolean, required: true }, 
+    tuAlcohol: { type: Boolean, default: false }
 });
 
 fiestaPrivadaSchema.methods.mostrarInfo = function () {
@@ -12,4 +12,4 @@ fiestaPrivadaSchema.methods.mostrarInfo = function () {
 
 const FiestaPrivada = Fiesta.discriminator('FiestaPrivada', fiestaPrivadaSchema);
 
-module.exports = FiestaPrivada;
+export default FiestaPrivada;

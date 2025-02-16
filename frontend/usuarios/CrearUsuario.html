@@ -51,7 +51,7 @@
                 <form method="post" action="http://127.0.0.1:3000/usuario/crear" class="p-4 border rounded shadow">
                     <p class="info h2">Crear Usuario</p>
                     <label for="nombreUsuario" class="form-label">Nombre de usuario:</label>
-                    <input type="text" name="nombreUsuario" id="nombreUsuario" class="form-control">
+                    <input type="text" name="nombreUsuario" id="nombreUsuario" class="form-control ">
                     <span id="nombreError" class="text-danger"></span>
                     <br>
 
@@ -70,29 +70,28 @@
                     <div class="showPass container d-flex justify-content-end">
                         <div class="row">
                             <div class="col">
-                                <i class="fas fa-eye" id="show"></i>
+                                <i class="fa-solid fa-eye" id="show"></i>
                                 <span id="mostrarPass">Mostrar contraseña</span>
                             </div>
                         </div>
                     </div>
                     <br>
+                    <div class="contenedor d-flex flex-row justify-content-between flex-wrap">
+                        <label for="edad" class="form-label">Edad:</label>
+                        <input type="number" name="edad" id="edad" class="form-control w-25">
 
-                    <label for="edad" class="form-label">Edad:</label>
-                    <input type="number" name="edad" id="edad" class="form-control-sm">
-
-                    <label for="ciudad" class="form-label">Ciudad:</label>
-                    <select name="ciudad" id="ciudad" class="form-control-sm">
-                        <option value="0">Selecciona una ciudad</option>
-                        <option value="madrid">Madrid</option>
-                        <option value="barcelona">Barcelona</option>
-                    </select>
+                        <label for="ciudad" class="form-label">Ciudad:</label>
+                        <select name="ciudad" id="ciudad" class="form-control w-50 ">
+                            <option value="0">Selecciona una ciudad</option>
+                            <option value="madrid">Madrid</option>
+                            <option value="barcelona">Barcelona</option>
+                        </select>
+                        
+                        <span id="edadError" class="text-danger"></span>
+                        <span id="ciudadError" class="text-danger"></span>
+                    </div>
                     <br>
-                    
-                    <span id="edadError" class="text-start position-absolute text-danger"></span>
-                    <span id="ciudadError" class="d-block text-center text-danger" ></span>
-                    <br>
-
-                    <input type="submit" class="btn btn-primary">
+                    <input type="submit" class="btn btn-primary" value="Crear">
                     <input type="reset" class="btn btn-secondary">
                     <br>
                     <span class="d-block mt-2">¿Ya tienes cuenta? <a href="./InicioSesion.html">Click aquí</a> </span>

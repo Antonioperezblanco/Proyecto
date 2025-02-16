@@ -1,18 +1,21 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import mongooseSequence from 'mongoose-sequence';
 
 const fiestaSchema = new mongoose.Schema({
+    idFiesta: { type: Number },
     ciudad: { type: String, required: true },
     localizacion: { type: String, required: true },
     hora: { type: String, required: true },
     vestimenta: { type: String, required: true },
-    precioCombinado: { type: Number, required: true },
-    precioCerveza: { type: Number, required: true },
-    precioRefresco: { type: Number, required: true },
+    precioCombinado: { type: Number },
+    precioCerveza: { type: Number },
+    precioRefresco: { type: Number },
     musica: { type: String, required: true },
     fecha: { type: Date, required: true },
-    id: { type: String, required: true, unique: true },
     contador: { type: Number, default: 0 },
-});
+}, {timestamps: true}); 
+
+fiestaSchema.plugin(mongooseSequence(mongoose), {inc_field: 'idFiesta'});
 
 fiestaSchema.methods.mostrarInfo = function () {
     return `
@@ -35,4 +38,5 @@ fiestaSchema.methods.añadirPersona = function () {
     return this.contador;
 };
 
-module.exports = mongoose.model('Fiesta', fiestaSchema);
+const Fiesta = mongoose.model('Fiesta', fiestaSchema);
+export default Fiesta;
